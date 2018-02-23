@@ -11,6 +11,15 @@ import (
 // for a linux container using the given
 func generateScriptPosix(commands []string) string {
 	var buf bytes.Buffer
+	buf.WriteString(`
+if test -f /post-drone-env.sh; then
+	source /post-drone-env.sh;
+fi
+`)
+	buf.WriteString(`
+if type -p git-restore-mtime; then
+	git restore-mtime;
+fi`)
 	for _, command := range commands {
 		escaped := fmt.Sprintf("%q", command)
 		escaped = strings.Replace(escaped, "$", `\$`, -1)

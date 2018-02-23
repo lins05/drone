@@ -84,11 +84,11 @@ func (c *Compiler) createProcess(name string, container *yaml.Container, section
 			environment["HOME"] = "/root"
 			environment["SHELL"] = "/bin/sh"
 		} else {
-			entrypoint = []string{"/bin/sh", "-c"}
-			command = []string{"echo $CI_SCRIPT | base64 -d | /bin/sh -e"}
+			entrypoint = []string{"/bin/bash", "-c"}
+			command = []string{"echo $CI_SCRIPT | base64 -d | /bin/bash -e"}
 			environment["CI_SCRIPT"] = generateScriptPosix(container.Commands)
 			environment["HOME"] = "/root"
-			environment["SHELL"] = "/bin/sh"
+			environment["SHELL"] = "/bin/bash"
 		}
 	}
 
